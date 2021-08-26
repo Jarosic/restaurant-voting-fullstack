@@ -1,0 +1,18 @@
+.title, .main {
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  height: 150px;
+  background-color: black;
+  font-size: 50px;
+  color: white;
+}
+
+.vote-button:focus {
+  background: green;
+}
+
+
+

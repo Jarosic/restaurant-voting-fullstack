@@ -1,0 +1,35 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">id</th>
+    <th scope="col">Name</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody class="restaurants-table">
+  <tr *ngFor="let restaurant of restaurants; let idx = index">
+    <th scope="row">{{idx + 1}}</th>
+    <td>{{restaurant.id}}</td>
+    <td>{{restaurant.name}}</td>
+    <td><button routerLink="details/{{restaurant.id}}">details</button></td>
+    <td><button routerLink="edit/{{restaurant.id}}">edit</button></td>
+    <td>
+      <button
+      (click)="deleteRestaurant(restaurant.id)"
+      >delete
+      </button></td>
+    <td>
+      <button
+        class="vote-button"
+        (click)="vote(restaurant.id)"
+      ><i class="bi bi-check-lg"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
