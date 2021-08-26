@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/restaurants/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                 .antMatchers(HttpMethod.POST, "/api/restaurants/**").hasRole(Role.ADMIN.name())
                 .antMatchers(HttpMethod.PUT, "/api/restaurants/**").hasRole(Role.ADMIN.name())
