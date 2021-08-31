@@ -1,19 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
+import {Restaurant} from "../../../model/restaurant";
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-details-restaurants',
   templateUrl: './details-restaurants.component.html',
   styleUrls: ['./details-restaurants.component.css']
 })
-export class DetailsRestaurantsComponent implements OnInit {
-  id: any;
+export class DetailsRestaurantsComponent {
 
-  constructor(private route: ActivatedRoute) {
-    route.params.subscribe(i => this.id = i.id)
-    console.log(this.id);
-  }
+  restaurant: Restaurant;
 
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+    private restaurantsService: RestaurantsService,
+  ) {
+    console.log("Restaurant details")
+    this.route.params.pipe(
+      switchMap((params: any) => {
+        return restaurantsService.getById(params.id);
+      })
+    ).subscribe((data: Restaurant) => {
+      this.restaurant = data;
+    });
   }
 }

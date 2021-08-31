@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {throwError} from "rxjs";
-import {Restaurants} from "../../model/restaurant";
+import {Observable, Subject, throwError} from "rxjs";
+import {Restaurant, Restaurants} from "../../model/restaurant";
 import {catchError} from "rxjs/operators";
 
 @Injectable({
@@ -10,6 +10,8 @@ import {catchError} from "rxjs/operators";
 
 export class RestaurantsService {
   baseUrl: string = "http://localhost:8080/api/restaurants";
+  restaurant: Observable<Restaurant>;
+  event$: Subject<Restaurant> = new Subject<Restaurant>();
 
   constructor(private http: HttpClient) {
   }
@@ -28,7 +30,7 @@ export class RestaurantsService {
     }
   }
 
-  list(): any {
+  list(): Observable<Restaurants> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
     return this.http.get<Restaurants>(`${this.baseUrl}`, {headers})
       .pipe(
@@ -36,17 +38,21 @@ export class RestaurantsService {
       );
   }
 
-  getById(id: number): any {
+  getById(id: number): Observable<Restaurant> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-      return this.http.get(`${this.baseUrl}/${id}`, {headers})
+      this.restaurant = this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {headers})
+      this.restaurant.subscribe(
+        (r) => this.event$.next(r)
+      );
+      return this.restaurant
         .pipe(
           catchError(RestaurantsService.handleError)
         );
   }
 
-  add(restaurant: Restaurants): any {
+  add(restaurant: Restaurants): Observable<Restaurants> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    return this.http.post(`${this.baseUrl}`, restaurant, {headers})
+    return this.http.post<Restaurants>(`${this.baseUrl}`, restaurant, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )

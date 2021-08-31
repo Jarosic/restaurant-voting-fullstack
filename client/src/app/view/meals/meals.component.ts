@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-meals',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MealsComponent implements OnInit {
 
-  constructor() { }
+  constructor(router: Router) {
+    console.log("Meals component")
+    //router.navigate(['/meals/list'])
+  }
 
   ngOnInit(): void {
   }

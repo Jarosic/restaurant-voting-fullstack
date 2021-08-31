@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Restaurants} from "../../../model/restaurant";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 
 @Component({
@@ -10,9 +10,14 @@ import {RestaurantsService} from "../../../service/restaurants/restaurants.servi
 })
 
 export class ListRestaurantsComponent {
+
   restaurants: Restaurants
 
-  constructor(private route: ActivatedRoute, restaurantsService: RestaurantsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private restaurantsService: RestaurantsService
+  ) {
     restaurantsService.list()
       .subscribe(restaurant => this.restaurants = restaurant)
   }
