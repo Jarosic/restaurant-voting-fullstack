@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Description</th>
+    <th scope="col">Price</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody class="restaurants-table">
+  <tr *ngFor="let meal of meals; let idx = index">
+    <th scope="row">{{idx + 1}}</th>
+    <td>{{meal.description}}</td>
+    <td>{{meal.price}}</td>
+    <td>
+      <button  routerLink="edit/{{meal.id}}">edit</button>
+    </td>
+    <td>
+      <button (click)="delete(meal.id)">delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
