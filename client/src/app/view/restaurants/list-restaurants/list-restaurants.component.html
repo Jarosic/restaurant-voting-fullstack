@@ -1,9 +1,8 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">#</th>
-    <th scope="col">id</th>
-    <th scope="col">Name</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
     <th scope="col"></th>
@@ -13,20 +12,37 @@
   <tbody class="restaurants-table">
   <tr *ngFor="let restaurant of restaurants; let idx = index">
     <th scope="row">{{idx + 1}}</th>
-    <td>{{restaurant.id}}</td>
     <td>{{restaurant.name}}</td>
-    <td><button routerLink="details/{{restaurant.id}}/meals/list">details</button></td>
-    <td><button routerLink="edit/{{restaurant.id}}">edit</button></td>
     <td>
       <button
-      (click)="deleteRestaurant(restaurant.id)"
-      >delete
-      </button></td>
+        title="menu"
+        class="btn btn-secondary"
+        routerLink="details/{{restaurant.id}}/meals/list">
+        <i class="bi bi-journal-text"></i>
+      </button>
+    </td>
     <td>
       <button
-        class="vote-button"
+        class="btn btn-secondary"
+        title="edit"
+        routerLink="edit/{{restaurant.id}}">
+        <i class="bi bi-wrench"></i>
+      </button>
+    </td>
+    <td>
+      <button
+        class="btn btn-secondary"
+        title="delete"
+        (click)="deleteRestaurant(restaurant.id)">
+        <i class="bi bi-trash"></i>
+      </button>
+    </td>
+    <td>
+      <button
+        class="btn btn-secondary"
+        title="vote"
         (click)="vote(restaurant.id)"
-      ><i class="bi bi-check-lg"></i>
+      ><i class="bi bi-check-circle"></i>
       </button>
     </td>
   </tr>

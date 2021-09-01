@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.title {
+  margin-bottom: 50px;
+}
+
 .header {
   text-align: center;
   height: 150px;
@@ -13,4 +17,6 @@
 .vote-button:focus {
   background: green;
 }
+
+
 

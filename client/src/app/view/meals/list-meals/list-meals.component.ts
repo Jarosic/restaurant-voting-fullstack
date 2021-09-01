@@ -11,11 +11,14 @@ import {ActivatedRoute} from "@angular/router";
 export class ListMealsComponent {
 
   meals: Meals;
+  restaurantName: string;
 
   constructor(private restaurantsService: RestaurantsService, activatedRote: ActivatedRoute) {
-    console.log("meals list")
     restaurantsService.event$
-      .subscribe((restaurant) => this.meals = restaurant.meals);
+      .subscribe((restaurant) => {
+        this.restaurantName = restaurant.name
+        this.meals = restaurant.meals
+      });
   }
     delete(id: number): void {
         console.log(id);
