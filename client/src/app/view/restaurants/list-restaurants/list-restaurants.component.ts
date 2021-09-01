@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {Restaurants} from "../../../model/restaurant";
+import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-list-restaurants',
@@ -11,26 +12,45 @@ import {RestaurantsService} from "../../../service/restaurants/restaurants.servi
 
 export class ListRestaurantsComponent {
 
-  restaurants: Restaurants
+  restaurants: Restaurants;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private restaurantsService: RestaurantsService
   ) {
+    console.log("List Restaurant comp")
     restaurantsService.list()
-      .subscribe(restaurant => this.restaurants = restaurant)
+      .subscribe(restaurant => this.restaurants = restaurant);
+
+    restaurantsService.changeData
+      .pipe(
+        switchMap((data: Restaurant) => {
+          return this.restaurantsService.create(data);
+        }),
+        switchMap(() => {
+          return restaurantsService.list();
+        })
+      ).subscribe((data: Restaurants) => {
+      this.restaurants = data;
+    })
+
+    restaurantsService.newList.subscribe((data: Restaurants) => {
+      this.restaurants = data;
+    });
   }
 
-  vote(restaurantId: any): void {
-      console.log(restaurantId)
+  deleteRestaurant(id: number): void {
+    this.restaurantsService.delete(id)
+      .pipe(
+        switchMap(() => {
+          return this.restaurantsService.list()
+        })
+      ).subscribe(restaurant => this.restaurants = restaurant);
+    //this.router.navigate(['/'])
   }
 
-  deleteRestaurant(id: any): void {
-    for (let i = 0; i < this.restaurants.length; i++) {
-      if (this.restaurants[i].id === id) {
-        this.restaurants.splice(i, 1);
-      }
-    }
+  vote(restaurantId: any, name: string): void {
+    alert(`Vote by restaurant name: ${name}, id: ${restaurantId}`)
   }
 }

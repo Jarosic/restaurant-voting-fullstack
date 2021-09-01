@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.css']
 })
-export class RestaurantsComponent implements OnInit {
+export class RestaurantsComponent {
   title: string;
   headTitle: string;
 
@@ -14,7 +14,7 @@ export class RestaurantsComponent implements OnInit {
     this.headTitle = "Restaurants Voting"
   }
 
-  ngOnInit(): void {
-  }
+  getRestaurant(): void {
 
+  }
 }

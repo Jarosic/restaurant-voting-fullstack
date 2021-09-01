@@ -17,7 +17,6 @@ export class DetailsRestaurantsComponent {
     private route: ActivatedRoute,
     private restaurantsService: RestaurantsService,
   ) {
-    console.log("Restaurant details")
     this.route.params.pipe(
       switchMap((params: any) => {
         return restaurantsService.getById(params.id);

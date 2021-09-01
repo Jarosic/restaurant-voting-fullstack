@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject, throwError} from "rxjs";
 import {Restaurant, Restaurants} from "../../model/restaurant";
@@ -9,9 +9,13 @@ import {catchError} from "rxjs/operators";
 })
 
 export class RestaurantsService {
+
   baseUrl: string = "http://localhost:8080/api/restaurants";
   restaurant: Observable<Restaurant>;
-  event$: Subject<Restaurant> = new Subject<Restaurant>();
+
+  mealsList$: Subject<Restaurant> = new Subject<Restaurant>();
+  changeData: EventEmitter<Restaurant> = new EventEmitter();
+  newList: EventEmitter<Restaurant> = new EventEmitter();
 
   constructor(private http: HttpClient) {
   }
@@ -42,7 +46,7 @@ export class RestaurantsService {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
       this.restaurant = this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {headers})
       this.restaurant.subscribe(
-        (r) => this.event$.next(r)
+        (r) => this.mealsList$.next(r)
       );
       return this.restaurant
         .pipe(
@@ -50,11 +54,27 @@ export class RestaurantsService {
         );
   }
 
-  add(restaurant: Restaurants): Observable<Restaurants> {
+  create(restaurant: Restaurant): Observable<Restaurant> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    return this.http.post<Restaurants>(`${this.baseUrl}`, restaurant, {headers})
+    return this.http.post<Restaurant>(`${this.baseUrl}`, restaurant, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )
+  }
+
+  delete(id: number): Observable<Restaurant> {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    return this.http.delete<Restaurant>(`${this.baseUrl}/${id}`, {headers})
+      .pipe(
+        catchError(RestaurantsService.handleError)
+      )
+  }
+
+  saveDataRestaurant(data: Restaurant): void {
+    this.changeData.emit(data);
+  }
+
+  updateList(data) {
+    this.newList.emit(data);
   }
 }
