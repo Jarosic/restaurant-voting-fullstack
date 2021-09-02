@@ -1,29 +1,98 @@
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+<form #restForm="ngForm" (ngSubmit)="onSubmit(restForm)">
   <h3>Add restaurant</h3>
-  <div class="mb-3">
+  <div>
     <input
-      type="name"
+      [ngClass]="{'danger-input': !(name.valid || name.untouched)}"
       class="form-control"
-      id="input-name"
       name="name"
-      placeholder="name"
-      #name="ngModel"
-      ngModel
+      placeholder="enter restaurant name"
       required
-      >
-    <button type="submit" class="btn btn-primary">Add restaurant</button>
+      minlength="2"
+      ngModel
+      #name="ngModel">
   </div>
+  <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+    <p>the min length must be > 2</p>
+  </div>
+  <button
+    [disabled]="!restForm.form.valid"
+    type="submit"
+    class="btn btn-secondary btn-submit">
+    Submit
+  </button>
 </form>
-<!--  </div>-->
-<!--  <div><h3>Meals</h3></div>-->
-<!--  <div class="mb-3">-->
-<!--    <label class="form-label">Description</label>-->
-<!--    <input type="text" class="form-control" id="description">-->
-<!--  </div>-->
-<!--  <div class="mb-3 form-check">-->
-<!--    <label class="form-label" for="price">Price</label>-->
-<!--    <input type="text" class="form-control" id="price">-->
-<!--  </div>-->
-<!--  <button type="submit" class="btn btn-primary">Add meals</button>-->
+
+<div>
+  <h3>Add meal</h3>
+  <form #mealsForm="ngForm" (ngSubmit)="addMeal(mealsForm)">
+    <input
+      [ngClass]="{'danger-input': !(description.valid || description.untouched)}"
+      class="form-control"
+      name="description"
+      style="margin-top: 10px"
+      placeholder="description"
+      ngModel
+      minlength="2"
+      #description="ngModel"
+      required="">
+    <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+    <input
+      [ngClass]="{'danger-input': !(price.valid || price.untouched)}"
+      name="price"
+      style="margin-top: 10px"
+      placeholder="price"
+      class="form-control"
+      ngModel
+      #price="ngModel"
+      required="">
+    <div [hidden]="price.valid || price.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+    <button
+      [disabled]="!mealsForm.form.valid"
+      type="submit"
+      class="btn btn-secondary btn-submit">
+      Add
+    </button>
+  </form>
+</div>
+
+<div>
+  <h3>Menu</h3>
+  <table class="table table-success table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="restaurants-table">
+    <tr *ngFor="let meal of meals; let idx = index">
+      <td>{{idx + 1}}</td>
+      <td>{{meal.description}}</td>
+      <td>{{meal.price}}</td>
+      <td>
+      </td>
+      <td>
+        <button
+          class="btn btn-secondary"
+          title="delete"
+          (click)="deleteMeal(idx)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
 
 

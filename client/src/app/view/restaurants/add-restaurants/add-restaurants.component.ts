@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 import {NgForm} from "@angular/forms";
-import {Restaurant} from "../../../model/restaurant";
+import {Meals} from "../../../model/meal";
 
 @Component({
   selector: 'app-add-restaurants',
@@ -11,15 +11,28 @@ import {Restaurant} from "../../../model/restaurant";
 })
 export class AddRestaurantsComponent {
 
-  restaurant: Restaurant = new Restaurant();
+  meals: Meals = [];
 
   constructor(
     private router: Router,
     private restaurantsService: RestaurantsService
-  ) { }
+  ) {
+  }
 
   onSubmit(ngForm: NgForm): void {
+    console.log(ngForm.value)
+    ngForm.value.meals = this.meals;
     this.restaurantsService.saveDataRestaurant(ngForm.value);
     this.router.navigate(['/']);
+  }
+
+  addMeal(ngForm: NgForm): void {
+    this.meals.push(ngForm.value)
+    ngForm.reset();
+  }
+
+  deleteMeal(id: number) {
+    this.meals.splice(id, 1);
+
   }
 }
