@@ -127,4 +127,20 @@ public class RestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.restaurantId").value(ID))
                 .andDo(print());
     }
+
+    @Test
+    @WithUserDetails(value = "user@gmail.com", userDetailsServiceBeanName = "userDetailsService")
+    public void unVote() throws Exception {
+        String url = REST_URL + "/unVote";
+        User user = UserTestData.getUpdateWithVote(null, ID);
+        perform(patch(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.name").value("User"))
+                .andExpect(jsonPath("$.id").value(user.getId()))
+                .andExpect(jsonPath("$.restaurantId").isEmpty())
+                .andExpect(jsonPath("$.votingDateTime").isEmpty())
+                .andDo(print());
+    }
 }

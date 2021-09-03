@@ -78,6 +78,16 @@ export class RestaurantsService {
       )
   }
 
+  vote(id: number): any{
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('user@gmail.com' + ':' + 'user')});
+    console.log("service:")
+    console.log(id)
+    return this.http.patch(`${this.baseUrl}/vote?restaurantId=${id}`,null,{headers})
+      .pipe(
+        catchError(RestaurantsService.handleError)
+      )
+  }
+
   saveDataRestaurant(data: Restaurant): void {
     this.changeData.emit(data);
   }

@@ -39,9 +39,17 @@
     </td>
     <td>
       <button
+        [hidden]="isVote"
         class="btn btn-secondary"
         title="vote"
-        (click)="vote(restaurant.id, restaurant.name)"
+        (click)="vote(restaurant.id, false)"
+      ><i class="bi bi-check-circle"></i>
+      </button>
+      <button
+        [hidden]="!isVote"
+        class="btn btn-primary"
+        title="vote"
+        (click)="vote(0, true)"
       ><i class="bi bi-check-circle"></i>
       </button>
     </td>

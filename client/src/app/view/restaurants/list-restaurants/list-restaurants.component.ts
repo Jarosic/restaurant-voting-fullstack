@@ -3,6 +3,7 @@ import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 import {switchMap} from "rxjs/operators";
+import {User} from "../../../model/user";
 
 @Component({
   selector: 'app-list-restaurants',
@@ -13,13 +14,13 @@ import {switchMap} from "rxjs/operators";
 export class ListRestaurantsComponent {
 
   restaurants: Restaurants;
+  isVote: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private restaurantsService: RestaurantsService
   ) {
-    console.log("List Restaurant comp")
     restaurantsService.list()
       .subscribe(restaurant => this.restaurants = restaurant);
 
@@ -47,10 +48,20 @@ export class ListRestaurantsComponent {
           return this.restaurantsService.list()
         })
       ).subscribe(restaurant => this.restaurants = restaurant);
-    //this.router.navigate(['/'])
   }
 
-  vote(restaurantId: any, name: string): void {
-    alert(`Vote by restaurant name: ${name}, id: ${restaurantId}`)
+  vote(restaurantId: number, flag: boolean): void {
+    this.isVote = flag;
+
+    console.log("list")
+    console.log(restaurantId)
+
+    if (!this.isVote) {
+      this.restaurantsService.vote(restaurantId)
+        .subscribe(() => this.isVote = true)
+    } else {
+      this.restaurantsService.vote(0)
+        .subscribe(() => this.isVote = false)
+    }
   }
 }

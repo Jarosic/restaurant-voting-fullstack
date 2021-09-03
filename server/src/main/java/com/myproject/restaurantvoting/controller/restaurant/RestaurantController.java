@@ -64,7 +64,19 @@ public class RestaurantController extends AbstractRestaurantController {
     @Override
     @PatchMapping(value = "/vote")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
+    public User vote(
+            @AuthenticationPrincipal SecurityUser authUser,
+            @RequestParam Integer restaurantId
+    ) {
+        log.info("Restaurant Controller vote User: {}, restId: {} ", authUser, restaurantId);
         return super.vote(authUser, restaurantId);
+    }
+
+    @Override
+    @PatchMapping(value = "/unVote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public User unVote(@AuthenticationPrincipal SecurityUser authUser) {
+        log.info("Restaurant Controller reVote User: {}", authUser);
+        return super.unVote(authUser);
     }
 }

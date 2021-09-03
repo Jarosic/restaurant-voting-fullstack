@@ -74,13 +74,25 @@ public class UserService implements UserDetailsService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public User vote(Integer userId, int restaurantId, LocalDateTime votingDateTime) {
+    public User vote(Integer userId, Integer restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
         User user = new User();
         if (userId != null) {
             user = ValidationUtil.checkForExist(repository.findById(userId), userId, User.class);
         }
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    public User unVote(Integer userId) {
+        log.info("unVote userId {}", userId);
+        User user = repository.getOne(userId);
+        if (user.getRestaurantId() != null && user.getVotingDateTime() != null) {
+            user.setRestaurantId(null);
+            user.setVotingDateTime(null);
+        }
+        ValidationUtil.assureIdConsistent(user, userId);
+        return repository.save(user);
     }
 
     @Override

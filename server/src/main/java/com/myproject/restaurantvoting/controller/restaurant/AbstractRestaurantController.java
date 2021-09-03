@@ -5,7 +5,6 @@ import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.service.RestaurantService;
 import com.myproject.restaurantvoting.service.UserService;
-import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,9 +47,14 @@ public abstract class AbstractRestaurantController {
         restaurantService.delete(id);
     }
 
-    public User vote(SecurityUser authUser, int restaurantId) {
+    public User vote(SecurityUser authUser, Integer restaurantId) {
         log.info("PATCH vote restaurantID: {}", restaurantId);
         restaurantService.get(restaurantId);//check for exist
         return userService.vote(authUser.id(), restaurantId, LocalDateTime.now());
+    }
+
+    public User unVote(SecurityUser authUser) {
+        log.info("PATCH unVote authUser: {}", authUser);
+        return userService.unVote(authUser.id());
     }
 }
