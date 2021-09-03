@@ -27,7 +27,7 @@ public class MealService {
         return meal;
     }
 
-    @CachePut("restaurants")
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Meal create(Meal meal, int restaurantId) {
         log.info("create {}", meal);
         Restaurant restaurant = ValidationUtil
@@ -36,7 +36,7 @@ public class MealService {
         return mealRepository.save(meal);
     }
 
-    @CachePut("restaurants")
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Meal update(Meal meal, int restaurantId) {
         log.info("update {}", meal);
         Restaurant restaurant = ValidationUtil

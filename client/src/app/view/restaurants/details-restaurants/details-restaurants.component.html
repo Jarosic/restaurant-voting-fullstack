@@ -1,2 +1,16 @@
-<app-meals></app-meals>
+<h3>{{restaurant?.name}}</h3>
+<table class="table table-success table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Description</th>
+    <th scope="col">Price</th>
+  </tr>
+  </thead>
+  <tbody class="restaurants-table">
+  <tr *ngFor="let meal of restaurant?.meals">
+    <td>{{meal.description}}</td>
+    <td>{{meal.price}}</td>
+  </tr>
+  </tbody>
+</table>
 

@@ -13,8 +13,7 @@ import {FormsModule} from "@angular/forms";
 const routes: Routes = [
   {path: '', component: RestaurantsComponent, children: [
       {path: 'add', component: AddRestaurantsComponent},
-      {path: 'details/:id', component: DetailsRestaurantsComponent,
-        loadChildren: () => import('src/app/view/meals/meals.module').then(m => m.MealsModule)},
+      {path: 'details/:id', component: DetailsRestaurantsComponent},
       {path: 'edit/:id', component: EditRestaurantsComponent},
     ]
   },

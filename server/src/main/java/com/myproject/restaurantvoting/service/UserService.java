@@ -9,7 +9,6 @@ import com.myproject.restaurantvoting.util.VoteUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -49,14 +48,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    @CachePut(value = "users", key = "#user.email")
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         log.info("create {}", user);
         ValidationUtil.checkNew(user);
         return repository.save(user);
     }
 
-    @CachePut(value = "users", key = "#user.email")
+    @CacheEvict(value = "users", allEntries = true)
     public User update(User user, int id) {
         log.info("update user: {}, id: {}", user, id);
         ValidationUtil.assureIdConsistent(user, id);
@@ -74,7 +73,7 @@ public class UserService implements UserDetailsService {
         repository.deleteById(id);
     }
 
-    @CachePut("users")
+    @CacheEvict(value = "users", allEntries = true)
     public User vote(Integer userId, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
         User user = new User();

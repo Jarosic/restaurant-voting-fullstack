@@ -20,7 +20,6 @@ export class AddRestaurantsComponent {
   }
 
   onSubmit(ngForm: NgForm): void {
-    console.log(ngForm.value)
     ngForm.value.meals = this.meals;
     this.restaurantsService.saveDataRestaurant(ngForm.value);
     this.router.navigate(['/']);
@@ -33,6 +32,5 @@ export class AddRestaurantsComponent {
 
   deleteMeal(id: number) {
     this.meals.splice(id, 1);
-
   }
 }
