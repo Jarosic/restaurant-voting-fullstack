@@ -49,6 +49,7 @@ public class RestaurantController extends AbstractRestaurantController {
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        log.info("Restaurant Controller: {}", restaurant);
         ValidationUtil.assureIdConsistent(restaurant, id);
         return super.update(restaurant, id);
     }

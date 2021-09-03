@@ -62,6 +62,14 @@ export class RestaurantsService {
       )
   }
 
+  update(restaurant: Restaurant, id: number): any {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    return this.http.put(`${this.baseUrl}/${id}`,restaurant,{headers})
+      .pipe(
+        catchError(RestaurantsService.handleError)
+      )
+  }
+
   delete(id: number): Observable<Restaurant> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
     return this.http.delete<Restaurant>(`${this.baseUrl}/${id}`, {headers})

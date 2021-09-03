@@ -6,8 +6,6 @@ import {DetailsRestaurantsComponent} from './details-restaurants/details-restaur
 import {RouterModule, Routes} from "@angular/router";
 import {RestaurantsComponent} from "./restaurants.component";
 import {CommonModule} from "@angular/common";
-import {MealsComponent} from "../meals/meals.component";
-import {MealsModule} from "../meals/meals.module";
 import {FormsModule} from "@angular/forms";
 
 const routes: Routes = [
@@ -23,7 +21,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MealsModule,
     FormsModule
   ],
   declarations: [
@@ -32,7 +29,6 @@ const routes: Routes = [
     EditRestaurantsComponent,
     DetailsRestaurantsComponent,
     RestaurantsComponent,
-    MealsComponent
   ],
   exports: [RouterModule],
   providers: []
