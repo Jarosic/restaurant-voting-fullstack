@@ -3,6 +3,7 @@ import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 import {switchMap} from "rxjs/operators";
+import {UsersService} from "../../../service/users/users.service";
 import {User} from "../../../model/user";
 
 @Component({
@@ -14,15 +15,20 @@ import {User} from "../../../model/user";
 export class ListRestaurantsComponent {
 
   restaurants: Restaurants;
-  isVote: boolean;
+  voteRestaurantName: string = '';
+  isVote: boolean = false;
+  user: User;
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private restaurantsService: RestaurantsService
+    private restaurantsService: RestaurantsService,
+    private userService: UsersService
   ) {
+
     restaurantsService.list()
-      .subscribe(restaurant => this.restaurants = restaurant);
+      .subscribe((data) => this.restaurants = data)
 
     restaurantsService.changeData
       .pipe(
@@ -39,6 +45,21 @@ export class ListRestaurantsComponent {
     restaurantsService.newList.subscribe((data: Restaurants) => {
       this.restaurants = data;
     });
+
+    userService.getById(100000)
+      .pipe(
+        switchMap((u) => {
+          if (u.restaurantId != null) {
+            this.isVote = true;
+            return restaurantsService.getById(u.restaurantId)
+          }
+        }),
+      ).subscribe(
+      (r) => {
+        this.voteRestaurantName = r.name
+      },
+      error => {}
+    )
   }
 
   deleteRestaurant(id: number): void {
@@ -50,18 +71,21 @@ export class ListRestaurantsComponent {
       ).subscribe(restaurant => this.restaurants = restaurant);
   }
 
-  vote(restaurantId: number, flag: boolean): void {
-    this.isVote = flag;
+  vote(restaurantId: number, flag: boolean, name: string): void {
+    this.restaurantsService.vote(restaurantId)
+      .subscribe(() => this.voteRestaurantName = name,
+        this.isVote = flag
+      );
+  }
 
-    console.log("list")
-    console.log(restaurantId)
-
-    if (!this.isVote) {
-      this.restaurantsService.vote(restaurantId)
-        .subscribe(() => this.isVote = true)
-    } else {
-      this.restaurantsService.vote(0)
-        .subscribe(() => this.isVote = false)
+  unVote(flag: boolean): void {
+    let c = confirm("Cancel selection ?");
+    if (c) {
+      this.restaurantsService.unVote()
+        .subscribe(
+          () => this.voteRestaurantName = '',
+          this.isVote = flag
+        );
     }
   }
 }

@@ -37,23 +37,27 @@
         <i class="bi bi-trash"></i>
       </button>
     </td>
+
     <td>
       <button
-        [hidden]="isVote"
+        [disabled]="isVote"
         class="btn btn-secondary"
         title="vote"
-        (click)="vote(restaurant.id, false)"
-      ><i class="bi bi-check-circle"></i>
-      </button>
-      <button
-        [hidden]="!isVote"
-        class="btn btn-primary"
-        title="vote"
-        (click)="vote(0, true)"
+        (click)="vote(restaurant.id, true, restaurant.name)"
       ><i class="bi bi-check-circle"></i>
       </button>
     </td>
   </tr>
   </tbody>
 </table>
+
+<div class="col">
+  <h3 style="color: #a52a2a">Your vote: {{voteRestaurantName}}</h3>
+  <button
+    [disabled]="!isVote"
+    class="btn btn-secondary"
+    (click)="unVote(false);">
+    Cancel
+  </button>
+</div>
 

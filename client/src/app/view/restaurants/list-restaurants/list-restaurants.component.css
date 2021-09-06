@@ -5,3 +5,8 @@ tr td, th {
 .table td, .table th {
   border-top: 0px;
 }
+
+.red {
+  background-color: red;
+  visibility: hidden;
+}
