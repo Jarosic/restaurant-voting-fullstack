@@ -1,1 +1,21 @@
-<p>users works!</p>
+<div class="title">
+  <h2>{{title}}</h2>
+</div>
+
+<section class="container">
+  <div class="row">
+    <div class="col">
+      <button
+        class="btn btn-secondary"
+        title="add restaurant"
+        routerLink="add">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+      <app-list-users></app-list-users>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

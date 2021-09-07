@@ -7,4 +7,4 @@ export class User {
   votingDateTime: any;
   restaurantId: number;
 }
-export type Users = Users[];
+export type Users = User[];

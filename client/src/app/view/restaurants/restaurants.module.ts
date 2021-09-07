@@ -31,7 +31,6 @@ const routes: Routes = [
     RestaurantsComponent,
   ],
   exports: [RouterModule],
-  providers: []
 })
 
 export class RestaurantsModule {

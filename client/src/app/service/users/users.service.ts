@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {User} from "../../model/user";
+import {User, Users} from "../../model/user";
+import {Restaurant} from "../../model/restaurant";
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +29,26 @@ export class UsersService {
     }
   }
 
+  list(): Observable<Users> {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    return this.http.get<Users>(`${this.baseUrl}`, {headers})
+      .pipe(
+        catchError(UsersService.handleError)
+      );
+  }
+
   getById(id: number): Observable<any> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
     return this.http.get<User>(`${this.baseUrl}/${id}`, {headers})
-      // .pipe(
-      //   catchError(UsersService.handleError));
+      .pipe(
+        catchError(UsersService.handleError));
+  }
+
+  delete(id: number): Observable<User> {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    return this.http.delete<User>(`${this.baseUrl}/${id}`, {headers})
+      .pipe(
+        catchError(UsersService.handleError)
+      )
   }
 }

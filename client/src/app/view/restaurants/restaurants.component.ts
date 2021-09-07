@@ -13,8 +13,4 @@ export class RestaurantsComponent {
     this.title = "Restaurants";
     this.headTitle = "Restaurants Voting"
   }
-
-  getRestaurant(): void {
-
-  }
 }

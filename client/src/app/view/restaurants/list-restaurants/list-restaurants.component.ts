@@ -68,7 +68,7 @@ export class ListRestaurantsComponent {
         switchMap(() => {
           return this.restaurantsService.list()
         })
-      ).subscribe(restaurant => this.restaurants = restaurant);
+      ).subscribe(restaurants => this.restaurants = restaurants);
   }
 
   vote(restaurantId: number, flag: boolean, name: string): void {
