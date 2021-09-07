@@ -1,0 +1,10 @@
+.btn-submit {
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+input {
+  margin-top: 10px;
+}
+.danger-input {
+  border: 2px solid red;
+}

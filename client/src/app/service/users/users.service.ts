@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
@@ -12,6 +12,7 @@ export class UsersService {
 
   baseUrl: string = "http://localhost:8080/api/admin/users";
   user: User;
+  changeData: EventEmitter<User> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -37,11 +38,29 @@ export class UsersService {
       );
   }
 
-  getById(id: number): Observable<any> {
+  getById(id: number): Observable<User> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
     return this.http.get<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
         catchError(UsersService.handleError));
+  }
+
+  create(user: User): Observable<User> {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    console.log('service')
+    console.log(user)
+    return this.http.post<User>(`${this.baseUrl}`, user, {headers})
+      .pipe(
+        catchError(UsersService.handleError)
+      )
+  }
+
+  update(user: User, id: number): any {
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    return this.http.put<User>(`${this.baseUrl}/${id}`,user,{headers})
+      .pipe(
+        catchError(UsersService.handleError)
+      )
   }
 
   delete(id: number): Observable<User> {
@@ -50,5 +69,9 @@ export class UsersService {
       .pipe(
         catchError(UsersService.handleError)
       )
+  }
+
+  saveDataUsers(data: User): void {
+    this.changeData.emit(data);
   }
 }

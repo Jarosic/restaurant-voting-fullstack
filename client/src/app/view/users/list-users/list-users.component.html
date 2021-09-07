@@ -1,8 +1,14 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col"></th>
-    <th scope="col"></th>
+    <th scope="col">#</th>
+    <th scope="col">name</th>
+    <th scope="col">email</th>
+    <th scope="col">registered</th>
+    <th scope="col">enabled</th>
+    <th scope="col">voting_date_time</th>
+    <th scope="col">restaurantId</th>
+    <th scope="col">roles</th>
     <th scope="col"></th>
     <th scope="col"></th>
   </tr>
@@ -11,6 +17,12 @@
   <tr *ngFor="let user of users; let idx = index">
     <th scope="row">{{idx + 1}}</th>
     <td>{{user.name}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.registered | date: 'short'}}</td>
+    <td>{{user.enabled}}</td>
+    <td>{{user.votingDateTime | date: 'short'}}</td>
+    <td>{{user.restaurantId}}</td>
+    <td>{{user.roles}}</td>
     <td>
       <button
         class="btn btn-secondary"

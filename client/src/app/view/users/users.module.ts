@@ -1,13 +1,17 @@
 import {NgModule} from "@angular/core";
-import {Route, RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
 import {UsersComponent} from "./users.component";
 import {ListUsersComponent} from './list-users/list-users.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {AddUsersComponent} from './add-users/add-users.component';
+import {EditUsersComponent} from './edit-users/edit-users.component';
 
-const routes: Route[] = [
+const routes: Routes = [
   {
     path: '', component: UsersComponent, children: [
+      {path: 'add', component: AddUsersComponent},
+      {path: 'edit/:id', component: EditUsersComponent}
     ]
   }
 ];
@@ -20,7 +24,9 @@ const routes: Route[] = [
   ],
   declarations: [
     UsersComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    AddUsersComponent,
+    EditUsersComponent
   ],
   exports:[RouterModule]
 })

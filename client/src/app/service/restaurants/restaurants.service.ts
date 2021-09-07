@@ -64,7 +64,7 @@ export class RestaurantsService {
 
   update(restaurant: Restaurant, id: number): any {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    return this.http.put(`${this.baseUrl}/${id}`,restaurant,{headers})
+    return this.http.put<Restaurant>(`${this.baseUrl}/${id}`,restaurant,{headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )

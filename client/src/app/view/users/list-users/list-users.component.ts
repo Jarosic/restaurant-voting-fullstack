@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {Users} from "../../../model/user";
+import {User, Users} from "../../../model/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UsersService} from "../../../service/users/users.service";
 import {switchMap} from "rxjs/operators";
+import {Restaurant, Restaurants} from "../../../model/restaurant";
 
 @Component({
   selector: 'app-list-users',
@@ -12,7 +13,6 @@ import {switchMap} from "rxjs/operators";
 export class ListUsersComponent {
 
   users: Users;
-  voteRestaurantName: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +21,18 @@ export class ListUsersComponent {
   ) {
     userService.list()
       .subscribe((users) => this.users = users);
+
+    userService.changeData
+      .pipe(
+        switchMap((data: User) => {
+          return this.userService.create(data);
+        }),
+        switchMap(() => {
+          return userService.list();
+        })
+      ).subscribe((data: Users) => {
+      this.users = data;
+    })
   }
 
   deleteUser(id: number): void {

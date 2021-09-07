@@ -1,0 +1,66 @@
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+  <h3>Add user</h3>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(name.valid || name.untouched)}"
+      class="form-control"
+      name="name"
+      placeholder="enter name"
+      required
+      minlength="2"
+      ngModel
+      #name="ngModel">
+    <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+  </div>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(email.valid || email.untouched)}"
+      class="form-control"
+      name="email"
+      placeholder="enter email"
+      required
+      minlength="2"
+      ngModel
+      [email] = "true"
+      #email="ngModel">
+    <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+      <p>minimum length must be > 2 and must be e-mail</p>
+    </div>
+  </div>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(password.valid || password.untouched)}"
+      class="form-control"
+      name="password"
+      placeholder="enter password"
+      required
+      minlength="2"
+      ngModel
+      #password="ngModel">
+    <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+  </div>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(roles.valid || roles.untouched)}"
+      class="form-control"
+      name="roles"
+      placeholder="enter role"
+      required
+      minlength="2"
+      ngModel
+      #roles="ngModel">
+    <div [hidden]="roles.valid || roles.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+  </div>
+  <button
+    [disabled]="!userForm.form.valid"
+    type="submit"
+    class="btn btn-secondary btn-submit">
+    Submit
+  </button>
+</form>

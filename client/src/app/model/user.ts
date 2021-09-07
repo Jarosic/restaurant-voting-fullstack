@@ -6,5 +6,6 @@ export class User {
   enabled: boolean;
   votingDateTime: any;
   restaurantId: number;
+  roles: [];
 }
 export type Users = User[];
