@@ -3,7 +3,6 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {User, Users} from "../../model/user";
-import {Restaurant} from "../../model/restaurant";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +10,8 @@ import {Restaurant} from "../../model/restaurant";
 export class UsersService {
 
   baseUrl: string = "http://localhost:8080/api/admin/users";
-  user: User;
   changeData: EventEmitter<User> = new EventEmitter();
+  newList: EventEmitter<User> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
 
@@ -47,8 +46,6 @@ export class UsersService {
 
   create(user: User): Observable<User> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    console.log('service')
-    console.log(user)
     return this.http.post<User>(`${this.baseUrl}`, user, {headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -73,5 +70,9 @@ export class UsersService {
 
   saveDataUsers(data: User): void {
     this.changeData.emit(data);
+  }
+
+  updateList(data) {
+    this.newList.emit(data);
   }
 }

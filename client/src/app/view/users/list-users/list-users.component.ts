@@ -3,7 +3,6 @@ import {User, Users} from "../../../model/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UsersService} from "../../../service/users/users.service";
 import {switchMap} from "rxjs/operators";
-import {Restaurant, Restaurants} from "../../../model/restaurant";
 
 @Component({
   selector: 'app-list-users',
@@ -33,6 +32,9 @@ export class ListUsersComponent {
       ).subscribe((data: Users) => {
       this.users = data;
     })
+
+    userService.newList
+      .subscribe((data: Users) => this.users = data)
   }
 
   deleteUser(id: number): void {

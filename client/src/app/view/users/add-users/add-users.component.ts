@@ -22,7 +22,6 @@ export class AddUsersComponent {
     let role = this.checkRole(ngForm.value.roles)
     rolesArr.push(role)
     ngForm.value.roles = rolesArr;
-    console.log(ngForm.value)
     this.userService.saveDataUsers(ngForm.value)
     this.router.navigate(['admin/users']);
   }

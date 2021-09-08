@@ -1,1 +1,66 @@
-<p>edit-users works!</p>
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+  <h3>Edit user</h3>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(name.valid || name.untouched)}"
+      class="form-control"
+      name="name"
+      [ngModel]="user?.name"
+      placeholder="enter name"
+      required
+      minlength="2"
+      ngModel
+      #name="ngModel">
+    <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
+      <p>the min length must be > 2</p>
+    </div>
+  </div>
+  <div>
+    <input
+      [ngClass]="{'danger-input': !(email.valid || email.untouched)}"
+      class="form-control"
+      name="email"
+      [ngModel]="user?.email"
+      placeholder="enter email"
+      required
+      minlength="2"
+      ngModel
+      [email] = "true"
+      #email="ngModel">
+    <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+      <p>minimum length must be > 2 and must be e-mail</p>
+    </div>
+  </div>
+  <div>
+    <input
+      hidden
+      class="form-control"
+      name="restaurantId"
+      [ngModel]="user?.restaurantId"
+      placeholder="enter restaurant id">
+  </div>
+  <div>
+    <input
+      class="form-control"
+      name="votingDateTime"
+      type="date"
+      hidden
+      [ngModel]="user?.votingDateTime"
+      placeholder="enter voting date time">
+  </div>
+  <div class="select-role">
+      <select
+        name="roles"
+        class="form-control"
+        [ngModel]="user?.roles">
+        <option>USER</option>
+        <option>ADMIN</option>
+      </select>
+  </div>
+  <button
+    [disabled]="!userForm.form.valid"
+    type="submit"
+    class="btn btn-secondary btn-submit">
+    Submit
+  </button>
+</form>
