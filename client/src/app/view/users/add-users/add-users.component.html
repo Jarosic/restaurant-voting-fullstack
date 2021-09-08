@@ -23,7 +23,7 @@
       required
       minlength="2"
       ngModel
-      [email] = "true"
+      [email]="true"
       #email="ngModel">
     <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
       <p>minimum length must be > 2 and must be e-mail</p>
@@ -43,18 +43,20 @@
       <p>the min length must be > 2</p>
     </div>
   </div>
-  <div>
-    <input
-      [ngClass]="{'danger-input': !(roles.valid || roles.untouched)}"
-      class="form-control"
+  <div class="select-role">
+    <label for="roles">Choose a role:</label>
+    <select
+      id="roles"
+      class="form-select"
       name="roles"
-      placeholder="enter role"
       required
-      minlength="2"
       ngModel
       #roles="ngModel">
+      <option>USER</option>
+      <option>ADMIN</option>
+    </select>
     <div [hidden]="roles.valid || roles.untouched" class="alert alert-danger">
-      <p>the min length must be > 2</p>
+      <p>select role</p>
     </div>
   </div>
   <button

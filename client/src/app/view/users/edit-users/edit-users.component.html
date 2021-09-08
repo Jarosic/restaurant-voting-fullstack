@@ -25,7 +25,7 @@
       required
       minlength="2"
       ngModel
-      [email] = "true"
+      [email]="true"
       #email="ngModel">
     <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
       <p>minimum length must be > 2 and must be e-mail</p>
@@ -49,13 +49,13 @@
       placeholder="enter voting date time">
   </div>
   <div class="select-role">
-      <select
-        name="roles"
-        class="form-control"
-        [ngModel]="user?.roles">
-        <option>USER</option>
-        <option>ADMIN</option>
-      </select>
+    <select
+      class="form-select"
+      name="roles"
+      [ngModel]="user?.roles">
+      <option>USER</option>
+      <option>ADMIN</option>
+    </select>
   </div>
   <button
     [disabled]="!userForm.form.valid"

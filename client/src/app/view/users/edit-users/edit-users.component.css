@@ -7,6 +7,6 @@
   border: 2px solid red;
 }
 
-input, select {
-  margin-top: 10px;
+input, .select-role {
+  margin-top: 12px;
 }

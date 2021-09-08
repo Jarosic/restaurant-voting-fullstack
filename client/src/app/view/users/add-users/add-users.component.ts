@@ -13,23 +13,13 @@ export class AddUsersComponent {
   constructor(
     private router: Router,
     private userService: UsersService
-  ) {
-
-  }
+  ) {}
 
   onSubmit(ngForm: NgForm): void {
-    let rolesArr = [];
-    let role = this.checkRole(ngForm.value.roles)
-    rolesArr.push(role)
-    ngForm.value.roles = rolesArr;
+    let roles = [];
+    roles.push(ngForm.value.roles);
+    ngForm.value.roles = roles;
     this.userService.saveDataUsers(ngForm.value)
     this.router.navigate(['admin/users']);
-  }
-
-  checkRole(role: string): string {
-    if (role.toUpperCase() === 'USER' || role.toUpperCase() === 'ADMIN') {
-      return role.toUpperCase();
-    }
-    return 'USER';
   }
 }
