@@ -10,18 +10,24 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
 
+  isAuth: boolean = true;
+
   constructor(
     private accountService: AccountService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   onSubmit(ngForm: NgForm): void {
     this.accountService.login(ngForm.value.email, ngForm.value.password)
       .subscribe(
-        (u)=> {
+        (u) => {
           console.log(u)
           window.localStorage.setItem("authUser", JSON.stringify(u))
+          this.isAuth = true;
           this.router.navigate(['restaurants'])
+        }, error => {
+          this.isAuth = false;
         });
   }
 }
