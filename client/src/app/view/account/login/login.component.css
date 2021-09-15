@@ -5,6 +5,9 @@
 
 input, .select-role {
   margin-top: 10px;
+  width: 350px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .danger-input {
@@ -12,6 +15,10 @@ input, .select-role {
 }
 
 form {
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
   background-color: bisque;
+  width: 400px;
 }
 

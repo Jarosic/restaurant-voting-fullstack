@@ -1,0 +1,23 @@
+.btn-submit {
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+input, .select-role {
+  margin-top: 10px;
+  width: 350px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.danger-input {
+  border: 2px solid red;
+}
+
+form {
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: bisque;
+  width: 400px;
+}
