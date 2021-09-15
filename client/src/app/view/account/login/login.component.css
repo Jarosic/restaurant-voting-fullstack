@@ -1,0 +1,17 @@
+.btn-submit {
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+input, .select-role {
+  margin-top: 10px;
+}
+
+.danger-input {
+  border: 2px solid red;
+}
+
+form {
+  background-color: bisque;
+}
+
