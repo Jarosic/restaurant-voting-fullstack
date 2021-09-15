@@ -9,8 +9,8 @@ import {FormsModule} from "@angular/forms";
 const routes: Routes = [
   {
     path: '', component: AccountComponent, children: [
+      {path: '', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
-      {path: 'login', component: LoginComponent}
     ]
   }
 ]
@@ -25,6 +25,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class AccountModule { }

@@ -8,7 +8,9 @@ import {NgForm} from "@angular/forms";
 })
 export class RegisterComponent {
 
-  constructor() { }
+  constructor() {
+    console.log('register')
+  }
 
   onSubmit(ngForm: NgForm) {
 

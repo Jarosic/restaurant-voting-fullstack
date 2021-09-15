@@ -18,6 +18,8 @@ export class ListUsersComponent {
     private router: Router,
     private userService: UsersService
   ) {
+    let user: User = JSON.parse(window.localStorage.getItem("authUser"))
+    console.log(user.roles)
     userService.list()
       .subscribe((users) => this.users = users);
 

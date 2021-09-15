@@ -4,6 +4,7 @@ import {AppComponent} from './app.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
+import {AccountService} from "./service/account/account.service";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import {HttpClientModule} from "@angular/common/http";
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AccountService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

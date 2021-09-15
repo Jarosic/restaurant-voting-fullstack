@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {User} from "../../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import {catchError} from "rxjs/operators";
 export class AccountService {
 
   baseUrl: string = "http://localhost:8080/api/account";
+  private isAuth: boolean = false
 
   constructor(private http: HttpClient) {
   }
@@ -27,13 +29,19 @@ export class AccountService {
     }
   }
 
-  login(): any {
-    this.http.get(this.baseUrl)
+  login(email: string, password: string): Observable<User> {
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(email + ':' + password)});
+    return this.http.get<User>(this.baseUrl, {headers})
       .pipe(
-        catchError(AccountService.handleError))
+        catchError(AccountService.handleError));
   }
 
-  logout(): any {
+  logout() {
+    this.isAuth = false;
+    window.localStorage.clear()
+  }
 
+  isLoggedIn(): boolean {
+    return this.isAuth;
   }
 }

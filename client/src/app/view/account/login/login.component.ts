@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {AccountService} from "../../../service/account/account.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -8,8 +10,18 @@ import {NgForm} from "@angular/forms";
 })
 export class LoginComponent {
 
-  constructor() {}
+  constructor(
+    private accountService: AccountService,
+    private router: Router
+  ) {}
 
   onSubmit(ngForm: NgForm): void {
+    this.accountService.login(ngForm.value.email, ngForm.value.password)
+      .subscribe(
+        (u)=> {
+          console.log(u)
+          window.localStorage.setItem("authUser", JSON.stringify(u))
+          this.router.navigate(['restaurants'])
+        });
   }
 }
