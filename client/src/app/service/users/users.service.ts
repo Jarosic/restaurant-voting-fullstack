@@ -31,8 +31,8 @@ export class UsersService {
   }
 
   list(): Observable<Users> {
-    //const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUser.email + ':' + this.authUser.roles)});
+    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    //let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUser.email + ':' + this.authUser.roles)});
     return this.http.get<Users>(`${this.baseUrl}`, {headers})
       .pipe(
         catchError(UsersService.handleError)
