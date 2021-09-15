@@ -70,7 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .logout()
+                .logoutUrl("api/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
 
     //https://stackoverflow.com/questions/55968110/angular-spring-with-cors-mapping-added-blocked-by-cors-policy-no-access-cont

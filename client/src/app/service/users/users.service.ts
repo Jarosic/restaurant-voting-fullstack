@@ -12,6 +12,7 @@ export class UsersService {
   baseUrl: string = "http://localhost:8080/api/admin/users";
   changeData: EventEmitter<User> = new EventEmitter();
   newList: EventEmitter<User> = new EventEmitter();
+  authUser: User;
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +31,8 @@ export class UsersService {
   }
 
   list(): Observable<Users> {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    //const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUser.email + ':' + this.authUser.roles)});
     return this.http.get<Users>(`${this.baseUrl}`, {headers})
       .pipe(
         catchError(UsersService.handleError)
