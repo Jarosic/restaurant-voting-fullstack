@@ -7,9 +7,10 @@ import {RouterModule, Routes} from "@angular/router";
 import {RestaurantsComponent} from "./restaurants.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {AuthGuards} from "../../service/auth.guards";
 
 const routes: Routes = [
-  {path: '', component: RestaurantsComponent, children: [
+  {path: '', component: RestaurantsComponent, canActivate: [AuthGuards], children: [
       {path: 'add', component: AddRestaurantsComponent},
       {path: 'details/:id', component: DetailsRestaurantsComponent},
       {path: 'edit/:id', component: EditRestaurantsComponent},

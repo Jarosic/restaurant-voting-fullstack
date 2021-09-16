@@ -6,6 +6,7 @@
   <div class="row">
     <div class="col">
       <button
+        [hidden]="!isAdmin"
         class="btn btn-secondary"
         title="add restaurant"
         routerLink="add">

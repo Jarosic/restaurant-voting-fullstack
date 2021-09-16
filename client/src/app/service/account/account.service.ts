@@ -10,7 +10,7 @@ import {User} from "../../model/user";
 export class AccountService {
 
   baseUrl: string = "http://localhost:8080/api/account";
-  private isAuth: boolean = false
+  isAuth: boolean = false
 
   constructor(private http: HttpClient) {
   }

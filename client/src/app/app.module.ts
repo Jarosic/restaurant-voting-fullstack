@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {AppComponent} from './app.component';
-import {NotFoundComponent} from './not-found/not-found.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
+
+import {AppComponent} from './app.component';
+import {NotFoundComponent} from './not-found/not-found.component';
 import {AccountService} from "./service/account/account.service";
+import {AuthGuards} from "./service/auth.guards";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,7 @@ import {AccountService} from "./service/account/account.service";
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AccountService],
+  providers: [AccountService, AuthGuards],
   bootstrap: [AppComponent],
 })
 export class AppModule {

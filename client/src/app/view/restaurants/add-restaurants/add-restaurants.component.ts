@@ -22,7 +22,7 @@ export class AddRestaurantsComponent {
   onSubmit(ngForm: NgForm): void {
     ngForm.value.meals = this.meals;
     this.restaurantsService.saveDataRestaurant(ngForm.value);
-    this.router.navigate(['/']);
+    this.router.navigate(['/restaurants']);
   }
 
   addMeal(ngForm: NgForm): void {

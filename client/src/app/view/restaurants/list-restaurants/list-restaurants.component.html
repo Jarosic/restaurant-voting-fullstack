@@ -23,6 +23,7 @@
     </td>
     <td>
       <button
+        [hidden]="!isAdmin"
         class="btn btn-secondary"
         title="edit"
         routerLink="edit/{{restaurant.id}}">
@@ -31,6 +32,7 @@
     </td>
     <td>
       <button
+        [hidden]="!isAdmin"
         class="btn btn-secondary"
         title="delete"
         (click)="deleteRestaurant(restaurant.id)">
@@ -40,6 +42,7 @@
 
     <td>
       <button
+        [hidden]="isAdmin"
         [disabled]="isVote"
         class="btn btn-secondary"
         title="vote"
@@ -51,7 +54,7 @@
   </tbody>
 </table>
 
-<div class="col">
+<div [hidden]="isAdmin" class="col">
   <h3 style="color: #a52a2a">Your vote: {{voteRestaurantName}}</h3>
   <button
     [disabled]="!isVote"

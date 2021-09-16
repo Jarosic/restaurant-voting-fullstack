@@ -20,7 +20,7 @@ export class EditRestaurantsComponent {
   constructor(
     private restaurantsService: RestaurantsService,
     private router: ActivatedRoute,
-    private redirect: Router
+    private routes: Router
   ) {
     this.router.params.pipe(
       switchMap((params: any) => {
@@ -45,7 +45,7 @@ export class EditRestaurantsComponent {
       })
     ).subscribe();
 
-    this.redirect.navigate(['/']);
+    this.routes.navigate(['/restaurants']);
   }
 
   addMeal(ngForm: NgForm): void {

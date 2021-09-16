@@ -18,6 +18,7 @@ export class ListRestaurantsComponent {
   voteRestaurantName: string = '';
   isVote: boolean = false;
   user: User;
+  isAdmin: boolean = false;
 
 
   constructor(
@@ -26,6 +27,13 @@ export class ListRestaurantsComponent {
     private restaurantsService: RestaurantsService,
     private userService: UsersService
   ) {
+
+    this.user = JSON.parse(window.localStorage.getItem('authUser'))
+    let role = []
+    role = this.user.roles;
+    if (role[0] === 'ADMIN') {
+      this.isAdmin = true;
+    }
 
     restaurantsService.list()
       .subscribe((data) => this.restaurants = data)
