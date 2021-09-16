@@ -11,9 +11,7 @@
         minlength="2"
         ngModel
         #name="ngModel">
-      <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
-        <p>the min length must be > 2</p>
-      </div>
+      <p style="color: red" [hidden]="name.valid || name.untouched">the min length must be > 2</p>
     </div>
     <div>
       <input
@@ -26,9 +24,7 @@
         ngModel
         [email]="true"
         #email="ngModel">
-      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
-        <p>minimum length must be > 2 and must be e-mail</p>
-      </div>
+      <p style="color: red" [hidden]="email.valid || email.untouched">minimum length must be > 2 and must be e-mail</p>
     </div>
     <div>
       <input
@@ -40,9 +36,7 @@
         minlength="2"
         ngModel
         #password="ngModel">
-      <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-        <p>the min length must be > 2</p>
-      </div>
+      <p style="color: red" [hidden]="password.valid || password.untouched">the min length must be > 2</p>
     </div>
     <div class="select-role">
       <label for="roles">Choose a role:</label>
@@ -56,9 +50,7 @@
         <option>USER</option>
         <option>ADMIN</option>
       </select>
-      <div [hidden]="roles.valid || roles.untouched" class="alert alert-danger">
-        <p>select role</p>
-      </div>
+      <p style="color: red" [hidden]="roles.valid || roles.untouched">select role</p>
     </div>
     <button
       [disabled]="!userForm.form.valid"
@@ -68,4 +60,5 @@
     </button>
   </form>
   <div><a routerLink="/">Login</a></div>
+  <p style="color: red" [hidden]="isRegister">this user is already exist</p>
 </section>

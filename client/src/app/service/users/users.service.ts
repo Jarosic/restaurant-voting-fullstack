@@ -12,9 +12,9 @@ export class UsersService {
   baseUrl: string = "http://localhost:8080/api/admin/users";
   changeData: EventEmitter<User> = new EventEmitter();
   newList: EventEmitter<User> = new EventEmitter();
-  authUser: User;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   private static handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -31,8 +31,9 @@ export class UsersService {
   }
 
   list(): Observable<Users> {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    //let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(this.authUser.email + ':' + this.authUser.roles)});
+    let authUser = JSON.parse(window.localStorage.getItem('authUser'));
+    console.log(authUser.password)
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<Users>(`${this.baseUrl}`, {headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -40,14 +41,16 @@ export class UsersService {
   }
 
   getById(id: number): Observable<User> {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
     return this.http.get<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
         catchError(UsersService.handleError));
   }
 
   create(user: User): Observable<User> {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
     return this.http.post<User>(`${this.baseUrl}`, user, {headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -55,7 +58,8 @@ export class UsersService {
   }
 
   update(user: User, id: number): any {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
     return this.http.put<User>(`${this.baseUrl}/${id}`,user,{headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -63,7 +67,8 @@ export class UsersService {
   }
 
   delete(id: number): Observable<User> {
-    const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
+    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
     return this.http.delete<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
         catchError(UsersService.handleError)

@@ -36,6 +36,12 @@ export class AccountService {
         catchError(AccountService.handleError));
   }
 
+  register(user: User): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/register`, user)
+      .pipe(
+        catchError(AccountService.handleError));
+  }
+
   logout() {
     this.isAuth = false;
     window.localStorage.clear()

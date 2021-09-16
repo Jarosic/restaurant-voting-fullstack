@@ -35,7 +35,7 @@ public class User extends AbstractNamedEntity implements Serializable {
     private String email;
 
     @Column(name = "password", nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//access only for write
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//access only for write
     @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)//encode pass to Bcript
     private String password;
 

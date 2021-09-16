@@ -37,7 +37,9 @@ public class AccountController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> register(@RequestBody User user) {
         log.info("POST register user: {}", user);
-        user.setRoles(Set.of(Role.USER));
+        if (user.getRoles().isEmpty()) {
+            user.setRoles(Set.of(Role.USER));
+        }
         user = userService.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/account")
