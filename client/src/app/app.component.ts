@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {User} from "./model/user";
+import {AccountService} from "./service/account/account.service";
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,13 @@ export class AppComponent {
   authUser: User;
   isAuth: boolean;
 
-   constructor() {
+   constructor(private accountService: AccountService) {
       if (this.authUser != null) {
           this.isAuth = true;
       }
+   }
+
+   logout() {
+     this.accountService.logout()
    }
 }

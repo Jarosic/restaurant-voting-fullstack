@@ -11,15 +11,15 @@
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class=" btn navbar-brand" title="Home" routerLink="/"><i class="bi bi-house-door"></i></a>
+  <a class=" btn navbar-brand" title="Home" routerLink="/restaurants"><i class="bi bi-house-door"></i></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="account">Account</a>
-      </li>
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" href="#">Account</a>-->
+<!--      </li>-->
       <li class="nav-item">
         <a class="nav-link" routerLink="admin/users">Users</a>
       </li>
@@ -27,7 +27,7 @@
         <a class="nav-link" routerLink="restaurants">Restaurants</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="account">Log out</a>
+        <a (click)="logout()" class="nav-link" routerLink="account">Log out</a>
       </li>
     </ul>
   </div>

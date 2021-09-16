@@ -44,14 +44,14 @@ export class RestaurantsService {
 
   getById(id: number): Observable<Restaurant> {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-      this.restaurant = this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {headers})
-      this.restaurant.subscribe(
-        (r) => this.mealsList$.next(r)
+    this.restaurant = this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {headers})
+    this.restaurant.subscribe(
+      (r) => this.mealsList$.next(r)
+    );
+    return this.restaurant
+      .pipe(
+        catchError(RestaurantsService.handleError)
       );
-      return this.restaurant
-        .pipe(
-          catchError(RestaurantsService.handleError)
-        );
   }
 
   create(restaurant: Restaurant): Observable<Restaurant> {
@@ -64,7 +64,7 @@ export class RestaurantsService {
 
   update(restaurant: Restaurant, id: number): any {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('admin@gmail.com' + ':' + 'admin')});
-    return this.http.put<Restaurant>(`${this.baseUrl}/${id}`,restaurant,{headers})
+    return this.http.put<Restaurant>(`${this.baseUrl}/${id}`, restaurant, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )
@@ -78,9 +78,9 @@ export class RestaurantsService {
       )
   }
 
-  vote(id: number): any{
+  vote(id: number): any {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('user@gmail.com' + ':' + 'user')});
-    return this.http.patch(`${this.baseUrl}/vote?restaurantId=${id}`,null,{headers})
+    return this.http.patch(`${this.baseUrl}/vote?restaurantId=${id}`, null, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )
@@ -88,7 +88,7 @@ export class RestaurantsService {
 
   unVote(): any {
     const headers = new HttpHeaders({Authorization: 'Basic ' + btoa('user@gmail.com' + ':' + 'user')});
-    return this.http.patch(`${this.baseUrl}/unVote`,null,{headers})
+    return this.http.patch(`${this.baseUrl}/unVote`, null, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )
