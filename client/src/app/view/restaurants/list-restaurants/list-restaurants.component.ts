@@ -2,8 +2,9 @@ import {Component} from '@angular/core';
 import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
-import {switchMap} from "rxjs/operators";
+import {switchMap, map} from "rxjs/operators";
 import {User} from "../../../model/user";
+import {LocalStorageService} from "../../../service/localStorage/local-storage.service";
 
 @Component({
   selector: 'app-list-restaurants',
@@ -24,9 +25,11 @@ export class ListRestaurantsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private restaurantsService: RestaurantsService,
+    private localStorageService: LocalStorageService,
   ) {
 
     this.user = JSON.parse(window.localStorage.getItem('authUser'))
+
     let role = []
     role = this.user.roles;
     if (role[0] === 'ADMIN') {
@@ -73,9 +76,12 @@ export class ListRestaurantsComponent {
   vote(restaurantId: number, flag: boolean, name: string): void {
     this.restaurantsService.vote(restaurantId)
       .subscribe((u: User) => {
-        console.log(u)
+        this.user.restaurantId = u.restaurantId;
+        this.user.votingDateTime = u.votingDateTime;
+        this.localStorageService.updateUser(this.user);
         this.voteRestaurantName = name;
         this.isVote = flag;
+        this.router.navigate(['/'])
       });
   }
 
