@@ -90,9 +90,13 @@ export class ListRestaurantsComponent {
     if (c) {
       this.restaurantsService.unVote()
         .subscribe(
-          () => this.voteRestaurantName = '',
-          this.isVote = flag
-        );
+          (u: User) => {
+            this.user.restaurantId = u.restaurantId;
+            this.user.votingDateTime = u.votingDateTime;
+            this.localStorageService.updateUser(this.user);
+            this.voteRestaurantName = '';
+            this.isVote = flag;
+          });
     }
   }
 }

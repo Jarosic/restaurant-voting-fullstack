@@ -41,6 +41,7 @@ export class RestaurantsService {
 
   list(): Observable<Restaurants> {
     let authUser = this.localStorageService.getUser();
+    console.log(authUser)
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<Restaurants>(`${this.baseUrl}`, {headers})
       .pipe(

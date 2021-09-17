@@ -13,7 +13,7 @@ export class LocalStorageService {
   }
 
   getUser(): User {
-    return JSON.parse(window.localStorage.getItem('AuthUser'));
+    return JSON.parse(window.localStorage.getItem('authUser'));
   }
 
   updateUser(user: User) {
