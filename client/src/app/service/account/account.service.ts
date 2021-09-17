@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {User} from "../../model/user";
+import {LocalStorageService} from "../localStorage/local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class AccountService {
   baseUrl: string = "http://localhost:8080/api/account";
   isAuth: boolean = false
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {
   }
 
   private static handleError(error: HttpErrorResponse) {
@@ -44,11 +48,11 @@ export class AccountService {
 
   logout() {
     this.isAuth = false;
-    window.localStorage.clear()
+    this.localStorageService.clearLocalStorage()
   }
 
   isLoggedIn(): boolean {
-    if (window.localStorage.getItem('authUser') != null) {
+    if (this.localStorageService.getUser() != null) {
       this.isAuth = true;
     }
     return this.isAuth;

@@ -6,12 +6,11 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from "@angular/router";
-import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
+import {Observable} from "rxjs";
+import {Injectable} from "@angular/core";
 
-import { AccountService } from "./account/account.service";
-import {User} from "../model/user";
-import {switchMap} from "rxjs/operators";
+import {AccountService} from "./account/account.service";
+import {LocalStorageService} from "./localStorage/local-storage.service";
 
 
 @Injectable()
@@ -20,7 +19,8 @@ export class AuthGuards implements CanActivate, CanActivateChild {
 
   constructor(
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -29,7 +29,7 @@ export class AuthGuards implements CanActivate, CanActivateChild {
 
     if (state.url === '/admin/users' && this.accountService.isLoggedIn()) {
       let role = [];
-      role = JSON.parse(window.localStorage.getItem('authUser')).roles;
+      role = this.localStorageService.getUser().roles;
       return role[0] === 'ADMIN';
     }
 

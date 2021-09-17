@@ -4,6 +4,7 @@ import {Observable, Subject, throwError} from "rxjs";
 import {Restaurant, Restaurants} from "../../model/restaurant";
 import {catchError} from "rxjs/operators";
 import { User } from 'src/app/model/user';
+import {LocalStorageService} from "../localStorage/local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class RestaurantsService {
   changeData: EventEmitter<Restaurant> = new EventEmitter();
   newList: EventEmitter<Restaurant> = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {
   }
 
   private static handleError(error: HttpErrorResponse) {
@@ -36,7 +40,7 @@ export class RestaurantsService {
   }
 
   list(): Observable<Restaurants> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<Restaurants>(`${this.baseUrl}`, {headers})
       .pipe(
@@ -45,7 +49,7 @@ export class RestaurantsService {
   }
 
   getById(id: number): Observable<Restaurant> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     this.restaurant = this.http.get<Restaurant>(`${this.baseUrl}/${id}`, {headers})
     this.restaurant.subscribe(
@@ -58,7 +62,7 @@ export class RestaurantsService {
   }
 
   create(restaurant: Restaurant): Observable<Restaurant> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.post<Restaurant>(`${this.baseUrl}`, restaurant, {headers})
       .pipe(
@@ -67,7 +71,7 @@ export class RestaurantsService {
   }
 
   update(restaurant: Restaurant, id: number): any {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.put<Restaurant>(`${this.baseUrl}/${id}`, restaurant, {headers})
       .pipe(
@@ -76,7 +80,7 @@ export class RestaurantsService {
   }
 
   delete(id: number): Observable<Restaurant> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.delete<Restaurant>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
@@ -85,7 +89,7 @@ export class RestaurantsService {
   }
 
   vote(id: number): Observable<User> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.patch<User>(`${this.baseUrl}/vote?restaurantId=${id}`, null, {headers})
       .pipe(
@@ -94,7 +98,7 @@ export class RestaurantsService {
   }
 
   unVote(): any {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.patch(`${this.baseUrl}/unVote`, null, {headers})
       .pipe(

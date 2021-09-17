@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {User, Users} from "../../model/user";
+import {LocalStorageService} from "../localStorage/local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ export class UsersService {
   changeData: EventEmitter<User> = new EventEmitter();
   newList: EventEmitter<User> = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalStorageService
+  ) {
   }
 
   private static handleError(error: HttpErrorResponse) {
@@ -31,7 +35,7 @@ export class UsersService {
   }
 
   list(): Observable<Users> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'));
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<Users>(`${this.baseUrl}`, {headers})
       .pipe(
@@ -40,7 +44,7 @@ export class UsersService {
   }
 
   getById(id: number): Observable<User> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
@@ -48,7 +52,7 @@ export class UsersService {
   }
 
   create(user: User): Observable<User> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.post<User>(`${this.baseUrl}`, user, {headers})
       .pipe(
@@ -57,7 +61,7 @@ export class UsersService {
   }
 
   update(user: User, id: number): any {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.put<User>(`${this.baseUrl}/${id}`,user,{headers})
       .pipe(
@@ -66,7 +70,7 @@ export class UsersService {
   }
 
   delete(id: number): Observable<User> {
-    let authUser = JSON.parse(window.localStorage.getItem('authUser'))
+    let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.delete<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
