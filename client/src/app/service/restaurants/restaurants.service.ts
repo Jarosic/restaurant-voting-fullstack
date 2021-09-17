@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, Subject, throwError} from "rxjs";
 import {Restaurant, Restaurants} from "../../model/restaurant";
 import {catchError} from "rxjs/operators";
+import { User } from 'src/app/model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -83,10 +84,10 @@ export class RestaurantsService {
       )
   }
 
-  vote(id: number): any {
+  vote(id: number): Observable<User> {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'))
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
-    return this.http.patch(`${this.baseUrl}/vote?restaurantId=${id}`, null, {headers})
+    return this.http.patch<User>(`${this.baseUrl}/vote?restaurantId=${id}`, null, {headers})
       .pipe(
         catchError(RestaurantsService.handleError)
       )

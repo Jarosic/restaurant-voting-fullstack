@@ -72,9 +72,11 @@ export class ListRestaurantsComponent {
 
   vote(restaurantId: number, flag: boolean, name: string): void {
     this.restaurantsService.vote(restaurantId)
-      .subscribe(() => this.voteRestaurantName = name,
-        this.isVote = flag
-      );
+      .subscribe((u: User) => {
+        console.log(u)
+        this.voteRestaurantName = name;
+        this.isVote = flag;
+      });
   }
 
   unVote(flag: boolean): void {

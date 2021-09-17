@@ -48,6 +48,9 @@ export class AccountService {
   }
 
   isLoggedIn(): boolean {
+    if (window.localStorage.getItem('authUser') != null) {
+      this.isAuth = true;
+    }
     return this.isAuth;
   }
 }
