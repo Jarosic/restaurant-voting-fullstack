@@ -32,7 +32,6 @@ export class UsersService {
 
   list(): Observable<Users> {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'));
-    console.log(authUser.password)
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<Users>(`${this.baseUrl}`, {headers})
       .pipe(
@@ -42,7 +41,7 @@ export class UsersService {
 
   getById(id: number): Observable<User> {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.get<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
         catchError(UsersService.handleError));
@@ -50,7 +49,7 @@ export class UsersService {
 
   create(user: User): Observable<User> {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.post<User>(`${this.baseUrl}`, user, {headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -59,7 +58,7 @@ export class UsersService {
 
   update(user: User, id: number): any {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.put<User>(`${this.baseUrl}/${id}`,user,{headers})
       .pipe(
         catchError(UsersService.handleError)
@@ -68,7 +67,7 @@ export class UsersService {
 
   delete(id: number): Observable<User> {
     let authUser = JSON.parse(window.localStorage.getItem('authUser'))
-    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.roles)});
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
     return this.http.delete<User>(`${this.baseUrl}/${id}`, {headers})
       .pipe(
         catchError(UsersService.handleError)

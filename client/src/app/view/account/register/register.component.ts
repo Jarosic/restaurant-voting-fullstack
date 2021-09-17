@@ -31,6 +31,7 @@ export class RegisterComponent {
         })
       ).subscribe(
       (u: User) => {
+        u.password = ngForm.value.password;
         window.localStorage.setItem("authUser", JSON.stringify(u))
         this.accountService.isAuth = true;
         this.router.navigate(['/restaurants'])

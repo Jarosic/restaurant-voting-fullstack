@@ -36,7 +36,7 @@ export class AuthGuards implements CanActivate, CanActivateChild {
     if (this.accountService.isLoggedIn()) {
       return true;
     } else {
-      this.router.navigate(['/'], {
+      this.router.navigate(['/account'], {
         queryParams: {
           accessDenied: true
         }
@@ -48,5 +48,4 @@ export class AuthGuards implements CanActivate, CanActivateChild {
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.canActivate(childRoute, state);
   }
-
 }

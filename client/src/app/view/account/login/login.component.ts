@@ -30,6 +30,7 @@ export class LoginComponent {
     this.accountService.login(ngForm.value.email, ngForm.value.password)
       .subscribe(
         (u) => {
+          u.password = ngForm.value.password;
           window.localStorage.setItem("authUser", JSON.stringify(u))
           this.isAuth = true;
           this.accountService.isAuth = true;

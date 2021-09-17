@@ -3,7 +3,6 @@ import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 import {switchMap} from "rxjs/operators";
-import {UsersService} from "../../../service/users/users.service";
 import {User} from "../../../model/user";
 
 @Component({
@@ -25,7 +24,6 @@ export class ListRestaurantsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private restaurantsService: RestaurantsService,
-    private userService: UsersService
   ) {
 
     this.user = JSON.parse(window.localStorage.getItem('authUser'))
@@ -54,20 +52,13 @@ export class ListRestaurantsComponent {
       this.restaurants = data;
     });
 
-    userService.getById(100000)
-      .pipe(
-        switchMap((u) => {
-          if (u.restaurantId != null) {
-            this.isVote = true;
-            return restaurantsService.getById(u.restaurantId)
-          }
-        }),
-      ).subscribe(
-      (r) => {
-        this.voteRestaurantName = r.name
-      },
-      error => {}
-    )
+    if (this.user.restaurantId != null) {
+      restaurantsService.getById(this.user.restaurantId).subscribe(
+        (r) => {
+          this.voteRestaurantName = r.name
+          this.isVote = true;
+        })
+    }
   }
 
   deleteRestaurant(id: number): void {
