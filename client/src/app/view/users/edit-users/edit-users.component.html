@@ -11,9 +11,7 @@
       minlength="2"
       ngModel
       #name="ngModel">
-    <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
-      <p>the min length must be > 2</p>
-    </div>
+      <p style="color: red" [hidden]="name.valid || name.untouched">the min length must be > 2</p>
   </div>
   <div>
     <input
@@ -27,9 +25,7 @@
       ngModel
       [email]="true"
       #email="ngModel">
-    <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
-      <p>minimum length must be > 2 and must be e-mail</p>
-    </div>
+      <p style="color: red" [hidden]="email.valid || email.untouched">minimum length must be > 2 and must be e-mail</p>
   </div>
   <div>
     <input

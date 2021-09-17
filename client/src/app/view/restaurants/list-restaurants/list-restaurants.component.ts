@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Restaurant, Restaurants} from "../../../model/restaurant";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
-import {switchMap, map} from "rxjs/operators";
+import {switchMap} from "rxjs/operators";
 import {User} from "../../../model/user";
 import {LocalStorageService} from "../../../service/localStorage/local-storage.service";
 
@@ -28,16 +28,16 @@ export class ListRestaurantsComponent {
     private localStorageService: LocalStorageService,
   ) {
 
-    this.user = JSON.parse(window.localStorage.getItem('authUser'))
+    this.user = this.localStorageService.getUser();
 
-    let role = []
+    let role = [];
     role = this.user.roles;
     if (role[0] === 'ADMIN') {
       this.isAdmin = true;
     }
 
     restaurantsService.list()
-      .subscribe((data) => this.restaurants = data)
+      .subscribe((data) => this.restaurants = data);
 
     restaurantsService.changeData
       .pipe(
