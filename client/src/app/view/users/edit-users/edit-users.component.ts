@@ -5,6 +5,7 @@ import {UsersService} from "../../../service/users/users.service";
 import {User} from "../../../model/user";
 import {NgForm} from "@angular/forms";
 import {Restaurant} from "../../../model/restaurant";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-edit-users',
@@ -30,9 +31,12 @@ export class EditUsersComponent {
   }
 
   onSubmit(ngForm: NgForm): void {
-    let roles = [];
-    roles.push(ngForm.value.roles);
-    ngForm.value.roles = roles;
+    if (!(ngForm.value.roles instanceof Array)) {
+      let roles = [];
+      roles.push(ngForm.value.roles);
+      ngForm.value.roles = roles;
+    }
+
     this.usersService.update(ngForm.value, this.user.id).pipe(
       switchMap(() => {
         return this.usersService.list();
@@ -40,7 +44,8 @@ export class EditUsersComponent {
       map((data: Restaurant) => {
         this.usersService.updateList(data);
       })
-    ).subscribe();
-    this.redirect.navigate(['admin/users']);
+    ).subscribe(() => {
+      this.redirect.navigate(['admin/users']);
+    });
   }
 }
