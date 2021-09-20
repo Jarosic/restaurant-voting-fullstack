@@ -5,7 +5,6 @@ import {UsersService} from "../../../service/users/users.service";
 import {User} from "../../../model/user";
 import {NgForm} from "@angular/forms";
 import {Restaurant} from "../../../model/restaurant";
-import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-edit-users',

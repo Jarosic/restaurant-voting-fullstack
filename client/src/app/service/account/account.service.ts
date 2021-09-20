@@ -1,10 +1,9 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {User} from "../../model/user";
 import {LocalStorageService} from "../localStorage/local-storage.service";
-import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
-    private localStorageService: LocalStorageService,
-    private router: Router
+    private localStorageService: LocalStorageService
   ) {
   }
 
@@ -56,10 +54,10 @@ export class AccountService {
         catchError(AccountService.handleError));
   }
 
-  updateAuthUser() {
+  updateAuthUser(user: User): Observable<User> {
     let authUser = this.localStorageService.getUser();
     let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
-    return this.http.put<User>(this.baseUrl, {headers})
+    return this.http.put<User>(this.baseUrl, user, {headers})
       .pipe(
         catchError(AccountService.handleError));
   }

@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from "../../../model/user";
 import {AccountService} from "../../../service/account/account.service";
-import {pipe} from "rxjs";
-import {switchMap} from "rxjs/operators";
 import {RestaurantsService} from "../../../service/restaurants/restaurants.service";
 import {Restaurant} from "../../../model/restaurant";
+import {LocalStorageService} from "../../../service/localStorage/local-storage.service";
 
 @Component({
   selector: 'app-details',
@@ -19,32 +18,20 @@ export class DetailsComponent {
 
   constructor(
     private accountService: AccountService,
+    private localStorageService: LocalStorageService,
     private restaurantsService: RestaurantsService
   ) {
-    accountService.getAuthUser()
-      .subscribe((user: User) => {
-        this.user = user;
-        let r = [];
-        r = this.user.roles;
-        this.role = r[0];
 
-        if (user.restaurantId != null) {
-          return restaurantsService.getById(user.restaurantId)
-            .subscribe((restaurant: Restaurant) => {
-                this.restaurantName = restaurant.name;
-            })
-        }
-      })
+    this.user = localStorageService.getUser()
+    let r = [];
+    r = this.user.roles;
+    this.role = r[0];
 
-    // accountService.getAuthUser()
-    // pipe(
-    //   switchMap((user: User) => {
-    //     if (user.restaurantId != null) {
-    //       return restaurantsService.getById(user.restaurantId)
-    //     }
-    //     this.user = user;
-    //     return null;
-    //   })
-    // )
+    if (this.user.restaurantId != null) {
+      restaurantsService.getById(this.user.restaurantId)
+        .subscribe((restaurant: Restaurant) => {
+          this.restaurantName = restaurant.name;
+        })
+    }
   }
 }
