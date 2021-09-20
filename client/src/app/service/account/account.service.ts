@@ -48,6 +48,22 @@ export class AccountService {
         catchError(AccountService.handleError));
   }
 
+  getAuthUser(): Observable<User> {
+    let authUser = this.localStorageService.getUser();
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
+    return this.http.get<User>(this.baseUrl, {headers})
+      .pipe(
+        catchError(AccountService.handleError));
+  }
+
+  updateAuthUser() {
+    let authUser = this.localStorageService.getUser();
+    let headers = new HttpHeaders({Authorization: 'Basic ' + btoa(authUser.email + ':' + authUser.password)});
+    return this.http.put<User>(this.baseUrl, {headers})
+      .pipe(
+        catchError(AccountService.handleError));
+  }
+
   logout() {
     this.isAuth = false;
     this.localStorageService.clearLocalStorage()

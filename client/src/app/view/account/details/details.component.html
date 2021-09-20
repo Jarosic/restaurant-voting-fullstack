@@ -1,0 +1,19 @@
+
+
+
+<section class="user-details">
+  <h3>Account</h3>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item active" aria-current="true">Name: {{user?.name}}</li>
+    <li class="list-group-item">Email: {{user?.email}}</li>
+    <li class="list-group-item">Restaurant voted for: {{restaurantName}}</li>
+    <li class="list-group-item">Role: {{role}}</li>
+  </ul>
+  <button
+    class="btn btn-secondary"
+    title="edit"
+    routerLink="/account/edit">Change details
+  </button>
+</section>
+
+
