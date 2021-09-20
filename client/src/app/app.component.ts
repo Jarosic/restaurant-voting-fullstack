@@ -20,5 +20,6 @@ export class AppComponent {
 
    logout() {
      this.accountService.logout()
+     window.window.location.reload()
    }
 }

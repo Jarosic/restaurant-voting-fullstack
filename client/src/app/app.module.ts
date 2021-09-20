@@ -19,7 +19,11 @@ import {LocalStorageService} from "./service/localStorage/local-storage.service"
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AccountService, AuthGuards, LocalStorageService],
+  providers: [
+    AccountService,
+    AuthGuards,
+    LocalStorageService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

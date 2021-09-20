@@ -4,6 +4,7 @@ import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {User} from "../../model/user";
 import {LocalStorageService} from "../localStorage/local-storage.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AccountService {
 
   constructor(
     private http: HttpClient,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private router: Router
   ) {
   }
 
@@ -49,6 +51,7 @@ export class AccountService {
   logout() {
     this.isAuth = false;
     this.localStorageService.clearLocalStorage()
+    window.localStorage.clear()
   }
 
   isLoggedIn(): boolean {

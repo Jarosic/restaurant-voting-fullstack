@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User, Users} from "../../../model/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UsersService} from "../../../service/users/users.service";
@@ -18,6 +18,7 @@ export class ListUsersComponent {
     private router: Router,
     private userService: UsersService
   ) {
+
     userService.list()
       .subscribe((users) => this.users = users);
 
@@ -38,8 +39,8 @@ export class ListUsersComponent {
   }
 
   deleteUser(id: number): void {
-      this.userService.delete(id)
-        .pipe(
+    this.userService.delete(id)
+      .pipe(
         switchMap(() => {
           return this.userService.list()
         })
