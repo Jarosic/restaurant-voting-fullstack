@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AccountService} from "../../../service/account/account.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {LocalStorageService} from "../../../service/localStorage/local-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,8 @@ export class LoginComponent {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private routes: ActivatedRoute
+    private localStorageService: LocalStorageService
   ) {
-    // routes.params.subscribe(
-    //   (params: Params) => {
-    //     if (params['accessDenied']) {
-    //       console.log('Access denied!')
-    //     }
-    //   }
-    // )
   }
 
   onSubmit(ngForm: NgForm): void {
@@ -31,7 +25,7 @@ export class LoginComponent {
       .subscribe(
         (u) => {
           u.password = ngForm.value.password;
-          window.localStorage.setItem("authUser", JSON.stringify(u))
+          this.localStorageService.addUser(u);
           this.isAuth = true;
           this.accountService.isAuth = true;
           this.router.navigate(['restaurants'])
