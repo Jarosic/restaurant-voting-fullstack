@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AccountService} from "../../../service/account/account.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {LocalStorageService} from "../../../service/localStorage/local-storage.service";
 
 @Component({

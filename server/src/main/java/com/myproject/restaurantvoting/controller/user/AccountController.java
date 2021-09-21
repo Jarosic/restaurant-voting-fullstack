@@ -1,8 +1,12 @@
 package com.myproject.restaurantvoting.controller.user;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
+import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.Role;
 import com.myproject.restaurantvoting.model.User;
+import com.myproject.restaurantvoting.repository.RestaurantRepository;
 import com.myproject.restaurantvoting.security.SecurityUser;
+import com.myproject.restaurantvoting.service.RestaurantService;
 import com.myproject.restaurantvoting.service.UserService;
 import com.myproject.restaurantvoting.util.ValidationUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -26,11 +31,24 @@ import java.util.Set;
 public class AccountController {
 
     private final UserService userService;
+    private final RestaurantService restaurantService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@AuthenticationPrincipal SecurityUser authUser) {
         log.info("GET get auth user: {}", authUser);
-        return authUser.getUser();
+        User user = authUser.getUser();
+        if (user.getRestaurantId() != null) {
+            try {
+                restaurantService.get(user.getRestaurantId());
+            } catch (NotFoundException e) {
+                log.error(String.valueOf(e));
+                user.setRestaurantId(null);
+                user.setVotingDateTime(null);
+                userService.update(user, user.getId());
+            }
+        }
+
+        return user;
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)

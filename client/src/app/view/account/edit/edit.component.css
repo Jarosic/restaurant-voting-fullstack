@@ -24,3 +24,11 @@ input {
 label {
   margin-top: 10px;
 }
+
+button {
+  display: inline-block;
+}
+
+.btn-secondary {
+  margin-right: 10px;
+}
