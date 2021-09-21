@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {AddUsersComponent} from './add-users/add-users.component';
 import {EditUsersComponent} from './edit-users/edit-users.component';
 import {AuthGuards} from "../../service/auth.guards";
+import { UsersFilterPipe } from './users-filter.pipe';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
     UsersComponent,
     ListUsersComponent,
     AddUsersComponent,
-    EditUsersComponent
+    EditUsersComponent,
+    UsersFilterPipe
   ],
   exports:[RouterModule]
 })

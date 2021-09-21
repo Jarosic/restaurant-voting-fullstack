@@ -1,45 +1,54 @@
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">name</th>
-    <th scope="col">email</th>
-    <th scope="col">registered</th>
-    <th scope="col">enabled</th>
-    <th scope="col">voting_date_time</th>
-    <th scope="col">restaurantId</th>
-    <th scope="col">roles</th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody class="users-table">
-  <tr *ngFor="let user of users; let idx = index">
-    <th scope="row">{{idx + 1}}</th>
-    <td>{{user.name}}</td>
-    <td>{{user.email}}</td>
-    <td>{{user.registered | date: 'short'}}</td>
-    <td>{{user.enabled}}</td>
-    <td>{{user.votingDateTime | date: 'short'}}</td>
-    <td>{{user.restaurantId}}</td>
-    <td>{{user.roles}}</td>
-    <td>
-      <button
-        class="btn btn-secondary"
-        title="edit"
-        routerLink="edit/{{user.id}}">
-        <i class="bi bi-wrench"></i>
-      </button>
-    </td>
-    <td>
-      <button
-        class="btn btn-secondary"
-        title="delete"
-        (click)="deleteUser(user.id)">
-        <i class="bi bi-trash"></i>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<section>
+  <input
+    class="form-control"
+    style="max-width:200px;" type="search"
+    placeholder="Search by email"
+    aria-label="Search"
+    [(ngModel)]="searchUser"
+  >
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">name</th>
+      <th scope="col">email</th>
+      <th scope="col">registered</th>
+      <th scope="col">enabled</th>
+      <th scope="col">voting_date_time</th>
+      <th scope="col">restaurantId</th>
+      <th scope="col">roles</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="users-table">
+    <tr *ngFor="let user of users | usersFilter: searchUser: 'email'; let idx = index">
+      <th scope="row">{{idx + 1}}</th>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.registered | date: 'short'}}</td>
+      <td>{{user.enabled}}</td>
+      <td>{{user.votingDateTime | date: 'short'}}</td>
+      <td>{{user.restaurantId}}</td>
+      <td>{{user.roles}}</td>
+      <td>
+        <button
+          class="btn btn-secondary"
+          title="edit"
+          routerLink="edit/{{user.id}}">
+          <i class="bi bi-wrench"></i>
+        </button>
+      </td>
+      <td>
+        <button
+          class="btn btn-secondary"
+          title="delete"
+          (click)="deleteUser(user.id)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</section>
 

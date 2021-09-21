@@ -12,6 +12,7 @@ import {switchMap} from "rxjs/operators";
 export class ListUsersComponent {
 
   users: Users;
+  searchUser: string = '';
 
   constructor(
     private route: ActivatedRoute,
