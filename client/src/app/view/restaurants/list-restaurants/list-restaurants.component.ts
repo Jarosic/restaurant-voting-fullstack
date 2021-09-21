@@ -19,6 +19,7 @@ export class ListRestaurantsComponent {
   isVote: boolean = false;
   user: User;
   isAdmin: boolean = false;
+  searchRestaurant = '';
 
 
   constructor(

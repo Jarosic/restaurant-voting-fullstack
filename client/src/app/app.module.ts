@@ -25,6 +25,8 @@ import {LocalStorageService} from "./service/localStorage/local-storage.service"
     LocalStorageService
   ],
   bootstrap: [AppComponent],
+  exports: [
+  ]
 })
 export class AppModule {
 }

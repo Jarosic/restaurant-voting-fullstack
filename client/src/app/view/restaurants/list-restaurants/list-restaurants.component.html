@@ -1,66 +1,75 @@
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-    <th scope="col"></th>
-  </tr>
-  </thead>
-  <tbody class="restaurants-table">
-  <tr *ngFor="let restaurant of restaurants; let idx = index">
-    <th scope="row">{{idx + 1}}</th>
-    <td>{{restaurant.name}}</td>
-    <td>
-      <button
-        title="menu"
-        class="btn btn-secondary"
-        routerLink="details/{{restaurant.id}}">
-        <i class="bi bi-journal-text"></i>
-      </button>
-    </td>
-    <td>
-      <button
-        [hidden]="!isAdmin"
-        class="btn btn-secondary"
-        title="edit"
-        routerLink="edit/{{restaurant.id}}">
-        <i class="bi bi-wrench"></i>
-      </button>
-    </td>
-    <td>
-      <button
-        [hidden]="!isAdmin"
-        class="btn btn-secondary"
-        title="delete"
-        (click)="deleteRestaurant(restaurant.id)">
-        <i class="bi bi-trash"></i>
-      </button>
-    </td>
+<section>
+  <input
+    class="form-control "
+    style="max-width:200px" type="search"
+    placeholder="Search by name"
+    aria-label="Search"
+    [(ngModel)]="searchRestaurant"
+  >
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody class="restaurants-table">
+    <tr *ngFor="let restaurant of restaurants | restaurantsFilter: searchRestaurant: 'name'; let idx = index">
+      <th scope="row">{{idx + 1}}</th>
+      <td>{{restaurant.name}}</td>
+      <td>
+        <button
+          title="menu"
+          class="btn btn-secondary"
+          routerLink="details/{{restaurant.id}}">
+          <i class="bi bi-journal-text"></i>
+        </button>
+      </td>
+      <td>
+        <button
+          [hidden]="!isAdmin"
+          class="btn btn-secondary"
+          title="edit"
+          routerLink="edit/{{restaurant.id}}">
+          <i class="bi bi-wrench"></i>
+        </button>
+      </td>
+      <td>
+        <button
+          [hidden]="!isAdmin"
+          class="btn btn-secondary"
+          title="delete"
+          (click)="deleteRestaurant(restaurant.id)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
 
-    <td>
-      <button
-        [hidden]="isAdmin"
-        [disabled]="isVote"
-        class="btn btn-secondary"
-        title="vote"
-        (click)="vote(restaurant.id, true, restaurant.name)"
-      ><i class="bi bi-check-circle"></i>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+      <td>
+        <button
+          [hidden]="isAdmin"
+          [disabled]="isVote"
+          class="btn btn-secondary"
+          title="vote"
+          (click)="vote(restaurant.id, true, restaurant.name)"
+        ><i class="bi bi-check-circle"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
-<div [hidden]="isAdmin" class="col">
-  <h3 style="color: #a52a2a">Your vote: {{voteRestaurantName}}</h3>
-  <button
-    [disabled]="!isVote"
-    class="btn btn-secondary"
-    (click)="unVote(false);">
-    Cancel
-  </button>
-</div>
+  <div [hidden]="isAdmin" class="col">
+    <h3 style="color: #a52a2a">Your vote: {{voteRestaurantName}}</h3>
+    <button
+      [disabled]="!isVote"
+      class="btn btn-secondary"
+      (click)="unVote(false);">
+      Cancel
+    </button>
+  </div>
+</section>
 

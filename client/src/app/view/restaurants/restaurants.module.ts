@@ -7,6 +7,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {RestaurantsComponent} from "./restaurants.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import { RestaurantsFilterPipe } from './restaurants-filter.pipe';
 
 const routes: Routes = [
   {path: '', component: RestaurantsComponent, children: [
@@ -29,6 +30,7 @@ const routes: Routes = [
     EditRestaurantsComponent,
     DetailsRestaurantsComponent,
     RestaurantsComponent,
+    RestaurantsFilterPipe,
   ],
   exports: [RouterModule],
 })
