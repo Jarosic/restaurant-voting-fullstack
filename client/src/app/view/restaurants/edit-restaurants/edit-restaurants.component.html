@@ -12,7 +12,7 @@
       ngModel
       #name="ngModel">
   </div>
-  <p style="color: red" [hidden]="name.valid || name.untouched">the min length must be > 2</p>
+  <p style="color: red" [hidden]="name.valid || name.untouched">min length must be > 2</p>
   <button
     [disabled]="!restForm.form.valid"
     type="submit"
@@ -34,7 +34,7 @@
       minlength="2"
       #description="ngModel"
       required="">
-    <p style="color: red" [hidden]="description.valid || description.untouched">the min length must be > 2</p>
+    <p style="color: red" [hidden]="description.valid || description.untouched">min length must be > 2</p>
     <input
       [ngClass]="{'danger-input': !(price.valid || price.untouched)}"
       name="price"
@@ -44,7 +44,7 @@
       ngModel
       #price="ngModel"
       required="">
-    <p style="color: red" [hidden]="price.valid || price.untouched">the min length must be > 2</p>
+    <p style="color: red" [hidden]="price.valid || price.untouched">min length must be > 2</p>
     <button
       [disabled]="!mealsForm.form.valid"
       type="submit"

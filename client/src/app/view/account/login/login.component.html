@@ -12,7 +12,7 @@
         ngModel
         [email]="true"
         #email="ngModel">
-        <p style="color: red" [hidden]="email.valid || email.untouched">minimum length must be > 2 and must be e-mail</p>
+        <p style="color: red" [hidden]="email.valid || email.untouched">min length must be > 2 and must be e-mail</p>
     </div>
     <div>
       <input
@@ -24,7 +24,7 @@
         minlength="2"
         ngModel
         #password="ngModel">
-      <p style="color: red" [hidden]="password.valid || password.untouched">the min length must be > 2</p>
+      <p style="color: red" [hidden]="password.valid || password.untouched">min length must be > 2</p>
       <p style="color: red" [hidden]="isAuth">this user does not exist</p>
     </div>
     <button
